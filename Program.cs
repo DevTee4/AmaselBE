@@ -1,4 +1,4 @@
-using BE.Services.Api.Configuration;
+using AmaselBE.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,4 +1,4 @@
-namespace BE.Services.Api.Configuration
+namespace AmaselBE.Configuration
 { 
     public class Setting
     {
