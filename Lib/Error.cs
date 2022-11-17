@@ -1,4 +1,4 @@
-namespace Lib
+namespace AmaselBE.Lib
 {
     public class Error
     {

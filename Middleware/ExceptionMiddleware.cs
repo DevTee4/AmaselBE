@@ -1,9 +1,9 @@
 using System.Net;
-using BE.Services.Api.Configuration;
-using Lib;
+using AmaselBE.Configuration;
+using AmaselBE.Lib;
 using Newtonsoft.Json;
 
-namespace BE.Services.Api.Middleware
+namespace AmaselBE.Middleware
 {
     public class ExceptionMiddleware
     {
