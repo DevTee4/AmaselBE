@@ -686,7 +686,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\OluwatoyinAyodele\\.nuget\\packages\\": {}
+    "C:\\Users\\OluwatoyinAyodele\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
@@ -697,6 +698,9 @@
       "packagesPath": "C:\\Users\\OluwatoyinAyodele\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\OluwatoyinAyodele\\Desktop\\Toyin\\AmaselBE\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "C:\\Users\\OluwatoyinAyodele\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
@@ -753,7 +757,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.305\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.306\\RuntimeIdentifierGraph.json"
       }
     }
   }
