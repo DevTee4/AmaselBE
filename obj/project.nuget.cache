@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "/3pVq1jRpyL21Jc/jCfel/T3Hsi9vSVh3zHuKwhma5JVO8Mm3az019377iu/18KE7LLVlzBKAZ5l20gk9lv+vg==",
+=======
+  "dgSpecHash": "LZ6KftgpzpMtv75N3KmkBOmLfRguKDcxxthu/v66KrijfgW5oVuyFuzSDkOpJ/z4GYZxUXD4sLkEsAiuqoio/g==",
+>>>>>>> 397ed4ebbcce16d146e8ab5f9326227daa495542
   "success": true,
   "projectFilePath": "D:\\Project\\AmaselBE\\AmaselBE.csproj",
   "expectedPackageFiles": [
