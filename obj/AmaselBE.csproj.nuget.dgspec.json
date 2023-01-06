@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\OluwatoyinAyodele\\Desktop\\Toyin\\AmaselBE\\AmaselBE.csproj": {}
+    "D:\\Project\\AmaselBE\\AmaselBE.csproj": {}
   },
   "projects": {
-    "C:\\Users\\OluwatoyinAyodele\\Desktop\\Toyin\\AmaselBE\\AmaselBE.csproj": {
+    "D:\\Project\\AmaselBE\\AmaselBE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\OluwatoyinAyodele\\Desktop\\Toyin\\AmaselBE\\AmaselBE.csproj",
+        "projectUniqueName": "D:\\Project\\AmaselBE\\AmaselBE.csproj",
         "projectName": "AmaselBE",
-        "projectPath": "C:\\Users\\OluwatoyinAyodele\\Desktop\\Toyin\\AmaselBE\\AmaselBE.csproj",
-        "packagesPath": "C:\\Users\\OluwatoyinAyodele\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\OluwatoyinAyodele\\Desktop\\Toyin\\AmaselBE\\obj\\",
+        "projectPath": "D:\\Project\\AmaselBE\\AmaselBE.csproj",
+        "packagesPath": "C:\\Users\\Akintunde\\.nuget\\packages\\",
+        "outputPath": "D:\\Project\\AmaselBE\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\OluwatoyinAyodele\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Akintunde\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -69,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.305\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
