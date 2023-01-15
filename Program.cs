@@ -25,6 +25,14 @@ builder.Services.AddScoped<AuthUserService> ();
 builder.Services.AddScoped<ChatService> ();
 builder.Services.AddScoped<PlatformService> ();
 builder.Services.AddScoped<UserService> ();
+builder.Services.AddScoped<AdvertisementRequestService> ();
+builder.Services.AddScoped<AdvertisementService> ();
+builder.Services.AddScoped<FeedbackService> ();
+builder.Services.AddScoped<GiftCardService> ();
+builder.Services.AddScoped<MessageService> ();
+builder.Services.AddScoped<PromoRequestService> ();
+builder.Services.AddScoped<RatingService> ();
+builder.Services.AddScoped<SellerManagementService> ();
 
 builder.Services.AddControllersWithViews ()
     // Maintain property names during serialization. See:
