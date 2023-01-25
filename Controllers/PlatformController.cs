@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Mail;
 using AmaselBE.Configuration;
 using AmaselBE.Services;
 using AmaselBE.Model;
@@ -13,6 +14,7 @@ namespace AmaselBE.Controllers
     {
         public PlatformService Service { get; set; }
         public UserService userService { get; set; }
+        public UtilService utilService { get; set; }
         private readonly ILogger<PlatformController> _logger;
 
         public PlatformController(ILogger<PlatformController> logger, Setting setting) : base(setting)
@@ -20,6 +22,7 @@ namespace AmaselBE.Controllers
             _logger = logger;
             Service = new PlatformService(setting);
             userService = new UserService(setting);
+            utilService = new UtilService(setting);
         }
 
         [HttpGet("GetAll/{skip?}/{limit?}")]
@@ -49,21 +52,50 @@ namespace AmaselBE.Controllers
                 if (result != null)
                 {
                     result.ForEach(platform =>
-                      {
-                          var user = new User();
-                          user.MailAddress = platform.MailAddress;
-                          user.Name = platform.Name;
-                          user.Active = platform.Active;
-                          user.UserType = UserType.Platform;
-                          user.Code = platform.Code;
-                          users.Add(user);
-                          userService.Save(users);
-                      });
+                    {
+                        var user = new User();
+                        user.MailAddress = platform.MailAddress;
+                        user.Name = platform.Name;
+                        user.Active = platform.Active;
+                        user.UserType = UserType.Platform;
+                        user.Code = platform.Code;
+                        users.Add(user);
+                        userService.Save(users);
+                        var mail = new Mail();
+                        mail.Recipient = user.MailAddress;
+                        mail.Subject = "Welcome to VENDOLA";
+                        mail.Body = "I am happy to welcome you to VENDOLA";
+                        utilService.sendMail(mail, nameof(User));
+                        // userService.Update(user);
+                    });
                 }
                 return Ok(result);
             }
             return NotFound(new Error { ErrorMsg = "No data recieved", StatusCode = (int)HttpStatusCode.Forbidden });
         }
+
+        // public static string sendMail(string mailFrom, string recipient, string subject, string body)
+        // {
+        //     var smtpClient = new SmtpClient(ServerName)
+        //     {
+        //         Port = 587,
+        //         Credentials = new NetworkCredential(SmtpUsername, SmtpPassword),
+        //         EnableSsl = true,
+        //     };
+        //     var mailMessage = new MailMessage
+        //     {
+        //         From = new MailAddress(mailFrom),
+        //         Subject = subject,
+        //         Body = body,
+        //         IsBodyHtml = true,
+        //     };
+        //     mailMessage.To.Add(recipient);
+
+        //     smtpClient.Send(mailMessage);
+
+        //     // smtpClient.Send("admin@techlivate.com", recipient, "WELCOME", "I am happy to welcome you to VENDOLA");
+        //     return "Mail sent successfully";
+        // }
 
 
         [HttpDelete("Delete/{ids}")]

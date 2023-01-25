@@ -3,9 +3,9 @@ using AmaselBE.Model;
 
 namespace AmaselBE.Services
 {
-    public class UserService : BaseService<User>
+    public class MailLogService : BaseService<MailLog>
     {
-        public UserService(Setting setting) : base(setting)
+        public MailLogService(Setting setting) : base(setting)
         {
 
         }
