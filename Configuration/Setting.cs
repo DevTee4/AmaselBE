@@ -9,5 +9,8 @@ namespace AmaselBE.Configuration
        public string ConnectionString { get; set; }
 
        public string DatabaseName { get; set; }
+       public string HostName { get; set; }
+       public string Username { get; set; }
+       public string Password { get; set; }
     }
 }
