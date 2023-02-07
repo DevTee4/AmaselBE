@@ -8,8 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AmaselBE.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class PlatformController : BaseController
     {
         public PlatformService Service { get; set; }
