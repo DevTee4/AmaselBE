@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AmaselBE.Controllers
 {
-   [Route("api/[controller]")]
-    [ApiController]
     public class ChatController : BaseController
     {
         public ChatService Service { get; set;} 
