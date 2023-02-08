@@ -4,7 +4,6 @@ namespace AmaselBE.Model {
         public string Name { get; set; }
         public string Logo { get; set; }
         public bool Active { get; set; }
-        public string PlatformUrl { get; set; }
         public string MailAddress { get; set; }
 
     }
