@@ -1,9 +1,8 @@
 using System.Net;
-using AmaselBE.Configuration;
 using AmaselBE.Services;
 using AmaselBE.Model;
-using AmaselBE.Lib;
 using Microsoft.AspNetCore.Mvc;
+using VendolaCore;
 
 namespace AmaselBE.Controllers
 {
@@ -11,12 +10,10 @@ namespace AmaselBE.Controllers
     {
         public PromoRequestService Service { get; set; }
 
-        public AuthUserService authUserService { get; set; }
 
-        public PromoRequestController(Setting setting) : base(setting)
+        public PromoRequestController(Setting setting, PromoRequestService service) : base(setting)
         {
-            Service = new PromoRequestService(setting);
-            authUserService = new AuthUserService(setting);
+            Service = service;
         }
         [HttpGet("GetAll/{skip?}/{limit?}")]
         public IActionResult GetAll()
@@ -32,23 +29,6 @@ namespace AmaselBE.Controllers
             var result = Service.Get(a => a.Id == param);
             return Ok(result);
         }
-
-        [HttpGet("GetWithCredential/{username}/{password}")]
-        public IActionResult GetWithCredential(string username, string password)
-        {
-            var result = new List<PromoRequest>();
-            var resultKey = this.authUserService.Get(a => a.MailAddress == username && a.Password == password);
-            if (resultKey.Count > 0)
-            {
-                resultKey.ForEach(res =>
-                {
-                    var promoReq = Service.Get(a => a.Code == res.Code);
-                    result.AddRange(promoReq);
-                });
-            }
-            return Ok(result);
-        }
-
         [HttpPost("Save")]
         public IActionResult Post([FromBody] List<PromoRequest> values)
         {
@@ -72,7 +52,7 @@ namespace AmaselBE.Controllers
         }
 
         [HttpGet("Search/{param}")]
-        public ActionResult<List<AuthUser>> Search(string param) => Ok(Service.Search(param));
+        public ActionResult<List<PromoRequest>> Search(string param) => Ok(Service.Search(param));
 
     }
 

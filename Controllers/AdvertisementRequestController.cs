@@ -1,22 +1,18 @@
 using System.Net;
-using AmaselBE.Configuration;
 using AmaselBE.Services;
 using AmaselBE.Model;
-using AmaselBE.Lib;
 using Microsoft.AspNetCore.Mvc;
+using VendolaCore;
 
 namespace AmaselBE.Controllers
 {
     public class AdvertisementRequestController : BaseController
     {
-        public AdvertisementRequestService Service { get; set; }
 
-        public AuthUserService authUserService { get; set; }
-
-        public AdvertisementRequestController(Setting setting) : base(setting)
+        AdvertisementRequestService Service;
+        public AdvertisementRequestController(Setting setting, AdvertisementRequestService service) : base(setting)
         {
-            Service = new AdvertisementRequestService(setting);
-            authUserService = new AuthUserService(setting);
+            Service = service;
         }
         [HttpGet("GetAll/{skip?}/{limit?}")]
         public IActionResult GetAll()
@@ -30,22 +26,6 @@ namespace AmaselBE.Controllers
         public IActionResult GetWithId(string param)
         {
             var result = Service.Get(a => a.Id == param);
-            return Ok(result);
-        }
-
-        [HttpGet("GetWithCredential/{username}/{password}")]
-        public IActionResult GetWithCredential(string username, string password)
-        {
-            var result = new List<AdvertisementRequest>();
-            var resultKey = this.authUserService.Get(a => a.MailAddress == username && a.Password == password);
-            if (resultKey.Count > 0)
-            {
-                resultKey.ForEach(res =>
-                {
-                    var adReq = Service.Get(a => a.Code == res.Code);
-                    result.AddRange(adReq);
-                });
-            }
             return Ok(result);
         }
 
@@ -70,9 +50,6 @@ namespace AmaselBE.Controllers
             Service.Remove(ids);
             return NoContent();
         }
-
-        [HttpGet("Search/{param}")]
-        public ActionResult<List<AuthUser>> Search(string param) => Ok(Service.Search(param));
 
     }
 

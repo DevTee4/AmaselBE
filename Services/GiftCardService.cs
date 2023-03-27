@@ -1,11 +1,11 @@
-using AmaselBE.Configuration;
 using AmaselBE.Model;
+using VendolaCore;
 
 namespace AmaselBE.Services
 {
     public class GiftCardService : BaseService<GiftCard>
     {
-        public GiftCardService(Setting setting) : base(setting)
+        public GiftCardService(Setting setting, IHttpContextAccessor context) : base(setting, context.HttpContext)
         {
 
         }

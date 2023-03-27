@@ -1,3 +1,5 @@
+using VendolaCore.Model;
+
 namespace AmaselBE.Model
 {
     public class GiftCard : BaseModel
@@ -7,7 +9,7 @@ namespace AmaselBE.Model
         public string MailTo { get; set; }
         public string Description { get; set; }
         public DateTimeOffset ValidFrom { get; set; }
-        public string PaymentInfo  { get; set; }
+        public string PaymentInfo { get; set; }
         public string Key { get; set; }
         public string FromName { get; set; }
         public string ToName { get; set; }

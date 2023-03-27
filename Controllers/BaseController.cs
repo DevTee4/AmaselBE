@@ -1,8 +1,9 @@
-using AmaselBE.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using VendolaCore;
+
 namespace AmaselBE.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class BaseController : ControllerBase
     {

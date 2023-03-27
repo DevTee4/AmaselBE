@@ -1,9 +1,8 @@
 using System.Net;
-using AmaselBE.Configuration;
 using AmaselBE.Services;
 using AmaselBE.Model;
-using AmaselBE.Lib;
 using Microsoft.AspNetCore.Mvc;
+using VendolaCore;
 
 namespace AmaselBE.Controllers
 {
@@ -11,12 +10,10 @@ namespace AmaselBE.Controllers
     {
         public AdvertisementService Service { get; set; }
 
-        public AuthUserService authUserService { get; set; }
 
-        public AdvertisementController(Setting setting) : base(setting)
+        public AdvertisementController(Setting setting, AdvertisementService service) : base(setting)
         {
-            Service = new AdvertisementService(setting);
-            authUserService = new AuthUserService(setting);
+            Service = service;
         }
         [HttpGet("GetAll/{skip?}/{limit?}")]
         public IActionResult GetAll()
@@ -33,21 +30,7 @@ namespace AmaselBE.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetWithCredential/{username}/{password}")]
-        public IActionResult GetWithCredential(string username, string password)
-        {
-            var result = new List<Advertisement>();
-            var resultKey = this.authUserService.Get(a => a.MailAddress == username && a.Password == password);
-            if (resultKey.Count > 0)
-            {
-                resultKey.ForEach(res =>
-                {
-                    var ad = Service.Get(a => a.Code == res.Code);
-                    result.AddRange(ad);
-                });
-            }
-            return Ok(result);
-        }
+
 
         [HttpPost("Save")]
         public IActionResult Post([FromBody] List<Advertisement> values)
@@ -71,8 +54,6 @@ namespace AmaselBE.Controllers
             return NoContent();
         }
 
-        [HttpGet("Search/{param}")]
-        public ActionResult<List<AuthUser>> Search(string param) => Ok(Service.Search(param));
 
     }
 

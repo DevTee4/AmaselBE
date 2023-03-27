@@ -1,3 +1,5 @@
+using VendolaCore.Model;
+
 namespace AmaselBE.Model
 {
     public class Feedback : BaseModel

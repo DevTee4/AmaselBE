@@ -1,9 +1,8 @@
 using System.Net;
-using AmaselBE.Configuration;
 using AmaselBE.Services;
 using AmaselBE.Model;
-using AmaselBE.Lib;
 using Microsoft.AspNetCore.Mvc;
+using VendolaCore;
 
 namespace AmaselBE.Controllers
 {
@@ -11,12 +10,10 @@ namespace AmaselBE.Controllers
     {
         public FeedbackService Service { get; set; }
 
-        public AuthUserService authUserService { get; set; }
 
-        public FeedbackController(Setting setting) : base(setting)
+        public FeedbackController(Setting setting, FeedbackService service) : base(setting)
         {
-            Service = new FeedbackService(setting);
-            authUserService = new AuthUserService(setting);
+            Service = service;
         }
         [HttpGet("GetAll/{skip?}/{limit?}")]
         public IActionResult GetAll()
@@ -33,21 +30,7 @@ namespace AmaselBE.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetWithCredential/{username}/{password}")]
-        public IActionResult GetWithCredential(string username, string password)
-        {
-            var result = new List<Feedback>();
-            var resultKey = this.authUserService.Get(a => a.MailAddress == username && a.Password == password);
-            if (resultKey.Count > 0)
-            {
-                resultKey.ForEach(res =>
-                {
-                    var feedBk = Service.Get(a => a.Code == res.Code);
-                    result.AddRange(feedBk);
-                });
-            }
-            return Ok(result);
-        }
+
 
         [HttpPost("Save")]
         public IActionResult Post([FromBody] List<Feedback> values)
@@ -70,9 +53,6 @@ namespace AmaselBE.Controllers
             Service.Remove(ids);
             return NoContent();
         }
-
-        [HttpGet("Search/{param}")]
-        public ActionResult<List<AuthUser>> Search(string param) => Ok(Service.Search(param));
 
     }
 
