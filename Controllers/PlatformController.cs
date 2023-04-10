@@ -3,6 +3,7 @@ using AmaselBE.Services;
 using AmaselBE.Model;
 using Microsoft.AspNetCore.Mvc;
 using VendolaCore;
+using VendolaCore.Model;
 
 namespace AmaselBE.Controllers
 {
@@ -18,7 +19,7 @@ namespace AmaselBE.Controllers
         }
 
         [HttpGet("GetAll/{skip?}/{limit?}")]
-        public IActionResult GetAll() => Ok(Service.Get());
+        public IActionResult GetAll(int skip, int limit) => Ok(Service.Get(skip, limit));
 
         [HttpGet("GetWithId/{param:length(24)}")]
         public IActionResult GetWithId(string param) => Ok(Service.Get(a => a.Id == param));
@@ -57,8 +58,13 @@ namespace AmaselBE.Controllers
             return NoContent();
         }
 
-        [HttpGet("Search/{param}")]
-        public ActionResult<List<Platform>> Search(string param) => Ok(Service.Search(param));
-
+        [HttpGet("Search/{param}/{skip?}/{limit?}")]
+        public ActionResult<List<Platform>> Search(string param, int skip, int limit) => Ok(Service.Search(param, skip, limit));
+        [HttpPost("Search/{skip?}/{limit?}")]
+        public ActionResult<List<Platform>> Search([FromBody] List<OperatorKeyValue> param, int skip, int limit)
+        {
+            var result = Service.Search(param, skip, limit);
+            return Ok(result);
+        }
     }
 }
