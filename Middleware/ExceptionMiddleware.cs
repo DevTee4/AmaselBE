@@ -47,7 +47,7 @@ namespace AmaselBE.Middleware
             {
                 errorMsg = JsonConvert.SerializeObject(new Error()
                 {
-                    ErrorMsg = "Server Error Please contact administrator.",
+                    ErrorMsg = "Server Error Please contact administrator (Platform).",
                     StatusCode = context.Response.StatusCode,
                     FullLog = "Server Error"
                 });
