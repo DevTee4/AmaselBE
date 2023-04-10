@@ -14,6 +14,12 @@ namespace AmaselBE.Services
 
         }
 
+        public bool PlatformEmpty()
+        {
+            var result = Count() > 0 ? false : true;
+            return result;
+        }
+
         public new List<Platform> Save(List<Platform> values)
         {
             var result = base.Save(values);

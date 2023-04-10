@@ -24,6 +24,13 @@ namespace AmaselBE.Controllers
         [HttpGet("GetWithId/{param:length(24)}")]
         public IActionResult GetWithId(string param) => Ok(Service.Get(a => a.Id == param));
 
+        [HttpGet("PlatformEmpty")]
+        public IActionResult PlatformEmpty()
+        {
+            return Ok(Service.PlatformEmpty());
+        }
+
+
         [HttpPost("Save")]
         public IActionResult Post([FromBody] List<Platform> values)
         {
