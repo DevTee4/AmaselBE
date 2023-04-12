@@ -9,7 +9,7 @@ namespace AmaselBE.Services
 {
     public class PlatformService : BaseService<Platform>
     {
-        public PlatformService(Setting setting, IHttpContextAccessor context) : base(setting, context.HttpContext)
+        public PlatformService(Setting setting, IHttpContextAccessor context, User user) : base(setting, context.HttpContext, user)
         {
 
         }
@@ -41,7 +41,7 @@ namespace AmaselBE.Services
             //create User on Gateway
             try
             {
-                var response = HttpWebRequest<AuthUser>.Post($"{Setting.AuthenticationURL}/Auth/SaveUsers/{nameof(Platform)}", authUsers, GetToken(), GetTenant());
+                var response = HttpWebRequest<AuthUser>.Post($"{Setting.AuthenticationURL}/Auth/Save/{nameof(Platform)}", authUsers, VendolaCore.VendolaCore.DefaultToken);
                 var vendolaCore = new VendolaCore.VendolaCore();
                 authUsers.ForEach(s =>
                 {
@@ -62,7 +62,7 @@ namespace AmaselBE.Services
 
         public static void SeedDB(Setting setting1, HttpContext context)
         {
-            var platformService = new PlatformService(setting1, new HttpContextAccessor { HttpContext = context });
+            var platformService = new PlatformService(setting1, new HttpContextAccessor { HttpContext = context }, null);
             platformService.Tenant = "Vendola";
             var res = platformService.Get(s => s.MailAddress == "vendola@gmail.com").Result.ToList();
             if (res.Count == 0)

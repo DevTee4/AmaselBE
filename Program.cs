@@ -1,5 +1,6 @@
 using AmaselBE.Services;
 using VendolaCore;
+using VendolaCore.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,11 @@ builder.Services.AddControllersWithViews()
     .AddJsonOptions(options =>
         options.JsonSerializerOptions.PropertyNamingPolicy = null);
 builder.Services.AddHttpContextAccessor();
+User user = new User();
+builder.Services.AddTransient<User>((s) =>
+{
+    return user;
+});
 var app = builder.Build();
 setting.ApplicationMode = app.Environment.IsDevelopment() ? "Developement" : "Production";
 app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
@@ -43,6 +49,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+//validate
+app.Use(async (httpContext, next) =>
+{
+    var token = httpContext.Request.Headers["Authorization"].Count > 0 ? httpContext.Request.Headers["Authorization"][0] : "";
+    var u = new VendolaCore.VendolaCore().GetUserFromJWT(token);
+    if (httpContext.Request.Path == "/" || u != null || (token == VendolaCore.VendolaCore.DefaultToken))
+    {
+        if (u != null)
+            user.SetUserFromJWT(u);
+        await next();
+    }
+
+});
 PlatformService.SeedDB(setting, null);
 app.UseHttpsRedirection();
 
