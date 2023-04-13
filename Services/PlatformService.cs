@@ -19,12 +19,37 @@ namespace AmaselBE.Services
             var result = Count() > 0 ? false : true;
             return result;
         }
-
-        public new List<Platform> Save(List<Platform> values)
+        public List<User> SaveUsers(List<User> values, string token = "")
         {
-            var result = base.Save(values);
+            //create User on Gateway
+            try
+            {
+                if (string.IsNullOrEmpty(token))
+                {
+                    token = GetToken();
+                }
+                var response = HttpWebRequest<AuthUser>.Post($"{Setting.AuthenticationURL}/Auth/Save/{nameof(Platform)}", values, token);
+                var vendolaCore = new VendolaCore.VendolaCore();
+                values.ForEach(s =>
+                {
+                    var found = values.Find(f => f.Id == s.Id);
+                    // if (string.IsNullOrEmpty(found.Token))
+                    // {
+                    //     found.Token = vendolaCore.GenerateJWT(s);
+                    // }
+                    found.Password = "";
+                });
+                return values;
+            }
+            catch (HttpRequestException ex)
+            {
+                throw ex;
+            }
+        }
+        public new List<Platform> Save(List<Platform> values, string token)
+        {
             var authUsers = new List<User>();
-            result.ForEach(platform =>
+            values.ForEach(platform =>
             {
                 var user = new User();
                 user.MailAddress = platform.MailAddress;
@@ -36,28 +61,12 @@ namespace AmaselBE.Services
                 user.LastCallTime = DateTimeOffset.Now;
                 user.Id = platform.Id;
                 user.Tenant = platform.Tenant;
+                user.PhoneNumber = platform.PhoneNumber;
                 authUsers.Add(user);
             });
-            //create User on Gateway
-            try
-            {
-                var response = HttpWebRequest<AuthUser>.Post($"{Setting.AuthenticationURL}/Auth/Save/{nameof(Platform)}", authUsers, VendolaCore.VendolaCore.DefaultToken);
-                var vendolaCore = new VendolaCore.VendolaCore();
-                authUsers.ForEach(s =>
-                {
-                    var found = result.Find(f => f.Id == s.Code);
-                    if (string.IsNullOrEmpty(found.Token))
-                    {
-                        found.Token = vendolaCore.GetTokenFromUser(s);
-                    }
-                    found.Password = "";
-                });
-                return result;
-            }
-            catch (HttpRequestException ex)
-            {
-                throw ex;
-            }
+            var result = base.Save(values);
+            SaveUsers(authUsers, token);
+            return result;
         }
 
         public static void SeedDB(Setting setting1, HttpContext context)
@@ -79,7 +88,7 @@ namespace AmaselBE.Services
                 };
                 platformService.Token = new VendolaCore.VendolaCore().GetTokenFromUser(null);
                 platformService.Tenant = "Vendola";
-                platformService.Save(new List<Platform> { platform });
+                platformService.Save(new List<Platform> { platform }, VendolaCore.VendolaCore.DefaultToken);
             }
         }
     }

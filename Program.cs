@@ -1,4 +1,5 @@
 using AmaselBE.Services;
+using Microsoft.AspNetCore.Http.Json;
 using VendolaCore;
 using VendolaCore.Model;
 
@@ -29,11 +30,10 @@ builder.Services.AddTransient<FeedbackService>();
 builder.Services.AddTransient<GiftCardService>();
 builder.Services.AddTransient<PromoRequestService>();
 builder.Services.AddTransient<RatingService>();
-
-builder.Services.AddControllersWithViews()
-    // Maintain property names during serialization. See:
-    .AddJsonOptions(options =>
-        options.JsonSerializerOptions.PropertyNamingPolicy = null);
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.PropertyNamingPolicy = null;
+});
 builder.Services.AddHttpContextAccessor();
 User user = new User();
 builder.Services.AddTransient<User>((s) =>

@@ -48,17 +48,16 @@ namespace AmaselBE.Controllers
             return NotFound(new Error { ErrorMsg = "No data recieved", StatusCode = (int)HttpStatusCode.Forbidden });
         }
 
-        [HttpPost("SavePlatformUser")]
-        public IActionResult PostUser([FromBody] List<Platform> values)
+        [HttpPost("SaveUsers")]
+        public IActionResult PostUser([FromBody] List<User> values)
         {
             if (values != null)
             {
-                var result = Service.Save(values);
+                var result = Service.SaveUsers(values);
                 return Ok(result);
             }
             return NotFound(new Error { ErrorMsg = "No data recieved", StatusCode = (int)HttpStatusCode.Forbidden });
         }
-
 
         [HttpDelete("Delete/{ids}")]
         public IActionResult Delete([FromQuery] string ids)
