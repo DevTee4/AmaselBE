@@ -49,26 +49,40 @@ namespace AmaselBE.Services
         public new List<Platform> Save(List<Platform> values, string token)
         {
             var authUsers = new List<User>();
-            values.ForEach(platform =>
+            values.ForEach(u =>
             {
-                var user = new User();
-                user.MailAddress = platform.MailAddress;
-                user.Code = platform.Id;
-                user.Name = platform.Name;
-                user.UserTypeId = platform.Id;
-                user.Password = platform.Password;
-                user.UserType = UserType.Platform;
-                user.LastCallTime = DateTimeOffset.Now;
-                user.Id = platform.Id;
-                user.Tenant = platform.Tenant;
-                user.PhoneNumber = platform.PhoneNumber;
-                authUsers.Add(user);
+                if (u.State == ObjectState.Changed)
+                {
+                    var user = new User();
+                    user.Code = u.Id;
+                    user.Name = u.Name;
+                    user.LastCallTime = DateTimeOffset.Now;
+                    user.PhoneNumber = u.PhoneNumber;
+                    user.State = u.State;
+                    authUsers.Add(user);
+                }
+                else
+                {
+                    u.Id = string.IsNullOrWhiteSpace(u.Id) ? MongoDB.Bson.ObjectId.GenerateNewId().ToString() : u.Id;
+                    var user = new User();
+                    user.MailAddress = u.MailAddress;
+                    user.Code = u.Id;
+                    user.Name = u.Name;
+                    user.UserTypeId = u.Id;
+                    user.Password = u.Password;
+                    user.UserType = UserType.Platform;
+                    user.LastCallTime = DateTimeOffset.Now;
+                    user.Id = u.Id;
+                    user.Tenant = u.Tenant;
+                    user.PhoneNumber = u.PhoneNumber;
+                    user.State = u.State;
+                    authUsers.Add(user);
+                }
             });
             var result = base.Save(values);
             SaveUsers(authUsers, token);
             return result;
         }
-
         public static void SeedDB(Setting setting1, HttpContext context)
         {
             var platformService = new PlatformService(setting1, new HttpContextAccessor { HttpContext = context }, null);
