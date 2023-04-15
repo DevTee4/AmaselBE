@@ -53,11 +53,20 @@ if (app.Environment.IsDevelopment())
 app.Use(async (httpContext, next) =>
 {
     var token = httpContext.Request.Headers["Authorization"].Count > 0 ? httpContext.Request.Headers["Authorization"][0] : "";
+
+
     var u = new VendolaCore.VendolaCore().GetUserFromJWT(token);
     if (httpContext.Request.Path == "/" || u != null || (token == VendolaCore.VendolaCore.DefaultToken))
     {
+        if (token == VendolaCore.VendolaCore.DefaultToken)
+        {
+            user.Tenant = VendolaCore.VendolaCore.DefaultTenant;
+        }
         if (u != null)
+        {
             user.SetUserFromJWT(u);
+        }
+
         await next();
     }
 
