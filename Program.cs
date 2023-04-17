@@ -18,6 +18,8 @@ builder.Configuration
 var setting = builder.Configuration.GetSection("Setting").Get<Setting>();
 
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter()));
+builder.Services.AddControllers()
+            .AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
 builder.Services.AddScoped<Setting>((s) =>
 {
     return setting;
@@ -54,7 +56,11 @@ app.Use(async (httpContext, next) =>
 {
     var token = httpContext.Request.Headers["Authorization"].Count > 0 ? httpContext.Request.Headers["Authorization"][0] : "";
 
+    using var loggerFactory = LoggerFactory.Create(loggingBuilder => loggingBuilder
+        .SetMinimumLevel(LogLevel.Trace)
+        .AddConsole());
 
+    ILogger logger = loggerFactory.CreateLogger<Program>();
     var u = new VendolaCore.VendolaCore().GetUserFromJWT(token);
     if (httpContext.Request.Path == "/" || u != null || (token == VendolaCore.VendolaCore.DefaultToken))
     {
@@ -62,6 +68,9 @@ app.Use(async (httpContext, next) =>
         {
             user.Tenant = VendolaCore.VendolaCore.DefaultTenant;
         }
+        logger.LogInformation(user.Tenant);
+        logger.LogInformation(token);
+
         if (u != null)
         {
             user.SetUserFromJWT(u);
