@@ -3,6 +3,7 @@ using AmaselBE.Services;
 using AmaselBE.Model;
 using Microsoft.AspNetCore.Mvc;
 using VendolaCore;
+using VendolaCore.Model;
 
 namespace AmaselBE.Controllers
 {

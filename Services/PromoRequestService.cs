@@ -1,5 +1,6 @@
 using AmaselBE.Model;
 using VendolaCore;
+using VendolaCore.Model;
 
 namespace AmaselBE.Services
 {
