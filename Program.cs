@@ -43,7 +43,7 @@ builder.Services.AddTransient<User>((s) =>
     return user;
 });
 var app = builder.Build();
-setting.ApplicationMode = app.Environment.IsDevelopment() ? "Developement" : "Production";
+setting.IsProduction = app.Environment.IsDevelopment() ? false : true;
 app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

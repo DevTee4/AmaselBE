@@ -13,7 +13,7 @@ namespace AmaselBE.Services
         public new List<Advertisement> Save(List<Advertisement> values)
         {
             var prefix = Context.Request.IsHttps ? "https://" : "http://";
-            prefix = prefix + Context.Request.Host.Host;
+            prefix = !Setting.IsProduction ? prefix + Context.Request.Host.Host + "/" : Setting.GatewayURL;
             foreach (var item in values)
             {
                 if (item.State == VendolaCore.Model.ObjectState.New)

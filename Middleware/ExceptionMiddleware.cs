@@ -33,7 +33,7 @@ namespace AmaselBE.Middleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             var errorMsg = "";
-            if (ConfigSetting.ApplicationMode != "Production")
+            if (!ConfigSetting.IsProduction)
             {
                 errorMsg = JsonConvert.SerializeObject(new Error()
                 {
