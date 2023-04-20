@@ -16,12 +16,8 @@ namespace AmaselBE.Controllers
             Service = service;
         }
         [HttpGet("GetAll/{skip?}/{limit?}")]
-        public IActionResult GetAll()
-        {
+        public IActionResult GetAll(int skip, int limit) => Ok(Service.Get(skip, limit));
 
-            return Ok(Service.Get());
-
-        }
 
         [HttpGet("GetWithId/{param:length(24)}")]
         public IActionResult GetWithId(string param)
@@ -50,9 +46,14 @@ namespace AmaselBE.Controllers
             Service.Remove(ids);
             return NoContent();
         }
-
-        [HttpGet("Search/{param}")]
-        public ActionResult<List<PromoRequest>> Search(string param) => Ok(Service.Search(param));
+        [HttpGet("Search/{param}/{skip?}/{limit?}")]
+        public ActionResult<List<PromoRequest>> Search(string param, int skip, int limit) => Ok(Service.Search(param, skip, limit));
+        [HttpPost("Search/{skip?}/{limit?}")]
+        public ActionResult<List<PromoRequest>> Search([FromBody] List<OperatorKeyValue> param, int skip, int limit)
+        {
+            var result = Service.Search(param, skip, limit);
+            return Ok(result);
+        }
 
     }
 
