@@ -12,19 +12,17 @@ namespace AmaselBE.Services
 
         public new List<Advertisement> Save(List<Advertisement> values)
         {
-            var prefix = Context.Request.IsHttps ? "https://" : "http://";
-            prefix = !Setting.IsProduction ? prefix + Context.Request.Host.Host + "/" : Setting.GatewayURL;
             foreach (var item in values)
             {
                 if (item.State == VendolaCore.Model.ObjectState.New)
                 {
-                    item.Image.Path = prefix + VendolaCore.VendolaCore.SaveFile(item.Image, item.Id, Setting);
+                    item.Image.Path = VendolaCore.VendolaCore.SaveFile(item.Image, item.Id, Setting);
                 }
                 else
                 {
                     if (item.Image.State == VendolaCore.Model.ObjectState.Changed)
                     {
-                        item.Image.Path = prefix + VendolaCore.VendolaCore.SaveFile(item.Image, item.Id, Setting);
+                        item.Image.Path = VendolaCore.VendolaCore.SaveFile(item.Image, item.Id, Setting);
                     }
                 }
             }
