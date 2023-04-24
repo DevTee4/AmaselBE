@@ -36,7 +36,6 @@ namespace AmaselBE.Controllers
             }
             return NotFound(new Error { ErrorMsg = "No data recieved", StatusCode = (int)HttpStatusCode.Forbidden });
         }
-
         [HttpDelete("Delete/{ids}")]
         public IActionResult Delete([FromQuery] string ids)
         {

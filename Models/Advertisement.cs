@@ -12,5 +12,7 @@ namespace AmaselBE.Model
         public AdvertType AdvertType { get; set; } = AdvertType.Product;
         public string Url { get; set; } = string.Empty;
         public string Request { get; set; }
+        public string Seller { get; set; } = string.Empty;
+
     }
 }

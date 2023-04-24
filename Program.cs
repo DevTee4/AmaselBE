@@ -31,6 +31,7 @@ builder.Services.AddTransient<AdvertisementService>();
 builder.Services.AddTransient<FeedbackService>();
 builder.Services.AddTransient<GiftCardService>();
 builder.Services.AddTransient<PromoRequestService>();
+builder.Services.AddTransient<PromoService>();
 builder.Services.AddTransient<RatingService>();
 builder.Services.Configure<JsonOptions>(options =>
 {
