@@ -15,7 +15,11 @@ namespace AmaselBE.Controllers
             Service = service;
         }
         [HttpGet("GetAll/{skip?}/{limit?}")]
-        public IActionResult GetAll(int skip, int limit) => Ok(Service.Get(skip, limit));
+        public IActionResult GetAll(int skip, int limit)
+        {
+            var response = Service.Get(skip, limit);
+            return Ok(response);
+        }
 
 
         [HttpGet("GetWithId/{param:length(24)}")]

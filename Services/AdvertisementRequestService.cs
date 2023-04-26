@@ -7,7 +7,7 @@ namespace AmaselBE.Services
     public class AdvertisementRequestService : BaseService<AdvertisementRequest>
     {
         AdvertisementService advertisementService;
-        public AdvertisementRequestService(Setting setting, IHttpContextAccessor context, AdvertisementService advertisementService) : base(setting, context.HttpContext)
+        public AdvertisementRequestService(Setting setting, IHttpContextAccessor context, User user, AdvertisementService advertisementService) : base(setting, context.HttpContext, user)
         {
             this.advertisementService = advertisementService;
         }
