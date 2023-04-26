@@ -1,11 +1,12 @@
 using AmaselBE.Model;
 using VendolaCore;
+using VendolaCore.Model;
 
 namespace AmaselBE.Services
 {
     public class AdvertisementService : BaseService<Advertisement>
     {
-        public AdvertisementService(Setting setting, IHttpContextAccessor context) : base(setting, context.HttpContext)
+        public AdvertisementService(Setting setting, IHttpContextAccessor context, User user) : base(setting, context.HttpContext, user)
         {
 
         }

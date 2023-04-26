@@ -7,7 +7,7 @@ namespace AmaselBE.Services
     public class PromoRequestService : BaseService<PromoRequest>
     {
         PromoService promoService;
-        public PromoRequestService(Setting setting, IHttpContextAccessor context, PromoService promoService) : base(setting, context.HttpContext)
+        public PromoRequestService(Setting setting, IHttpContextAccessor context, PromoService promoService, User user) : base(setting, context.HttpContext, user)
         {
             this.promoService = promoService;
         }
