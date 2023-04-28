@@ -6,7 +6,7 @@ namespace AmaselBE.Model
     {
         public bool Active { get; set; } = false;
         public DateTimeOffset ValidFrom { get; set; } = DateTimeOffset.Now;
-        public Image Image { get; set; }
+        public Attachment File { get; set; }
         public string Name { get; set; }
         public DateTimeOffset ValidTo { get; set; } = DateTimeOffset.Now;
         public AdvertType AdvertType { get; set; } = AdvertType.Product;

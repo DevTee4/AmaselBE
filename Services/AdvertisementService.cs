@@ -17,13 +17,13 @@ namespace AmaselBE.Services
             {
                 if (item.State == VendolaCore.Model.ObjectState.New)
                 {
-                    item.Image.Path = VendolaCore.VendolaCore.SaveFile(item.Image, item.Id, Setting);
+                    item.File.Url = VendolaCore.VendolaCore.SaveFile(item.File, item.Id, Setting);
                 }
                 else
                 {
-                    if (item.Image.State == VendolaCore.Model.ObjectState.Changed)
+                    if (item.File.State == VendolaCore.Model.ObjectState.Changed)
                     {
-                        item.Image.Path = VendolaCore.VendolaCore.SaveFile(item.Image, item.Id, Setting);
+                        item.File.Url = VendolaCore.VendolaCore.SaveFile(item.File, item.Id, Setting);
                     }
                 }
             }

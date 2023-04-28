@@ -13,7 +13,7 @@ namespace AmaselBE.Model
         public AdvertisementRequestStatus Status { get; set; } = AdvertisementRequestStatus.Pending;
         public string ApprovedBy { get; set; } = string.Empty;
         public string Seller { get; set; } = string.Empty;
-        public Image Image { get; set; }
+        public Attachment Image { get; set; }
         public List<Comment> Comments { get; set; } = new List<Comment>();
 
     }
