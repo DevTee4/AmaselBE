@@ -24,7 +24,7 @@ builder.Services.AddScoped<Setting>((s) =>
 {
     return setting;
 });
-builder.Services.AddTransient<AttachmentService>();
+// builder.Services.AddTransient<AttachmentService>();
 builder.Services.AddTransient<PlatformService>();
 builder.Services.AddTransient<AdvertisementRequestService>();
 builder.Services.AddTransient<AdvertisementService>();

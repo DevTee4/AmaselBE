@@ -22,7 +22,7 @@ namespace AmaselBE.Services
                     var advert = new Advertisement
                     {
                         ValidFrom = s.FromDate,
-                        Image = s.Image,
+                        File = s.Image,
                         ValidTo = s.ToDate,
                         AdvertType = s.AdvertType,
                         Url = s.Url,
