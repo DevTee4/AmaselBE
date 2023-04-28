@@ -14,8 +14,7 @@ namespace AmaselBE.Model
         public string ApprovedBy { get; set; } = string.Empty;
         public string Seller { get; set; } = string.Empty;
         public Image Image { get; set; }
-
-
+        public List<Comment> Comments { get; set; } = new List<Comment>();
 
     }
 }
