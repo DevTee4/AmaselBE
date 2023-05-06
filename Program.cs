@@ -20,6 +20,11 @@ var setting = builder.Configuration.GetSection("Setting").Get<Setting>();
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter()));
 builder.Services.AddControllers()
             .AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
+User user = new User();
+builder.Services.AddTransient<User>((s) =>
+{
+    return user;
+});
 builder.Services.AddScoped<Setting>((s) =>
 {
     return setting;
@@ -33,35 +38,23 @@ builder.Services.AddTransient<GiftCardService>();
 builder.Services.AddTransient<PromoRequestService>();
 builder.Services.AddTransient<PromoService>();
 builder.Services.AddTransient<RatingService>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<JsonOptions>(options =>
 {
     options.SerializerOptions.PropertyNamingPolicy = null;
 });
-builder.Services.AddHttpContextAccessor();
-User user = new User();
-builder.Services.AddTransient<User>((s) =>
-{
-    return user;
-});
+
 var app = builder.Build();
-setting.IsProduction = app.Environment.IsDevelopment() ? false : true;
-app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 //validate
 app.Use(async (httpContext, next) =>
 {
     var token = httpContext.Request.Headers["Authorization"].Count > 0 ? httpContext.Request.Headers["Authorization"][0] : "";
 
-    using var loggerFactory = LoggerFactory.Create(loggingBuilder => loggingBuilder
-        .SetMinimumLevel(LogLevel.Trace)
-        .AddConsole());
+    // using var loggerFactory = LoggerFactory.Create(loggingBuilder => loggingBuilder
+    //     .SetMinimumLevel(LogLevel.Trace)
+    //     .AddConsole());
 
-    ILogger logger = loggerFactory.CreateLogger<Program>();
+    // ILogger logger = loggerFactory.CreateLogger<Program>();
     var u = new VendolaCore.VendolaCore().GetUserFromJWT(token);
     if (httpContext.Request.Path == "/" || u != null || (token == VendolaCore.VendolaCore.DefaultToken))
     {
@@ -69,8 +62,8 @@ app.Use(async (httpContext, next) =>
         {
             user.Tenant = VendolaCore.VendolaCore.DefaultTenant;
         }
-        logger.LogInformation(user.Tenant);
-        logger.LogInformation(token);
+        // logger.LogInformation(user.Tenant);
+        // logger.LogInformation(token);
 
         if (u != null)
         {
@@ -81,8 +74,19 @@ app.Use(async (httpContext, next) =>
     }
 
 });
+
+setting.IsProduction = app.Environment.IsDevelopment() ? false : true;
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+
 PlatformService.SeedDB(setting, null);
-app.UseHttpsRedirection();
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
